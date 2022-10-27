@@ -10,39 +10,43 @@
 
   <div class="keys">
     <div data-key="65" class="key">
-      <kbd>A</kbd>
+      <kbd>J</kbd>
       <span class="sound">clap</span>
     </div>
     <div data-key="83" class="key">
-      <kbd>S</kbd>
+      <kbd>A</kbd>
       <span class="sound">hihat</span>
     </div>
     <div data-key="68" class="key">
-      <kbd>D</kbd>
+      <kbd>C</kbd>
       <span class="sound">kick</span>
     </div>
     <div data-key="70" class="key">
-      <kbd>F</kbd>
+      <kbd>K</kbd>
       <span class="sound">openhat</span>
     </div>
     <div data-key="71" class="key">
-      <kbd>G</kbd>
+      <kbd>M</kbd>
       <span class="sound">boom</span>
     </div>
     <div data-key="72" class="key">
-      <kbd>H</kbd>
+      <kbd>A</kbd>
       <span class="sound">ride</span>
     </div>
     <div data-key="74" class="key">
-      <kbd>J</kbd>
+      <kbd>G</kbd>
       <span class="sound">snare</span>
     </div>
     <div data-key="75" class="key">
-      <kbd>K</kbd>
+      <kbd>U</kbd>
       <span class="sound">tom</span>
     </div>
     <div data-key="76" class="key">
-      <kbd>L</kbd>
+      <kbd>I</kbd>
+      <span class="sound">tink</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>R</kbd>
       <span class="sound">tink</span>
     </div>
   </div>
@@ -59,6 +63,28 @@
 
 <script>
 
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    // console.log(audio);
+    // console.log(key);
+    if(!audio) return; // stop the function from running
+    audio.currentTime = 0; // rewind to the start
+    audio.play();
+
+    key.classList.add('playing');
+  }
+
+  function removeTransition(e) {
+    if(e.propertyName !== 'transform') return; // skip if it's not a transform
+    console.log(e.propertyName);
+    this.classList.remove('playing');
+  }
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  // console.log(keys)
+  window.addEventListener('keydown', playSound);
 </script>
 
 
